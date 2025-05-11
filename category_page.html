@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ category_name|capitalize }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        nav>div.links {
+            display: flex;
+            align-items: center;
+        }
+
+        nav>div.links>* {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+            position: relative;
+        }
+
+        nav>div.links>a.active,
+        nav>div.links>a:hover {
+            color: #FF5733;
+            border-bottom: 2px solid #FF5733;
+        }
+
+        nav>div.links>div.dropdown>a {
+            color: #555;
+            text-decoration: none;
+            border-bottom: none;
+        }
+
+        nav>div.links>div.dropdown>a:hover {
+            color: #FF5733;
+            border-bottom: 2px solid #FF5733;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 100%;
+        }
+
+        nav>div.links>div.dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #555;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            /* Indicate it's clickable */
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .card p {
+            margin: 0.2rem 0;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar .title {
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            padding-left: 2.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-button {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            background-color: #FF5733;
+            color: white;
+            border-radius: 50%;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav>div.links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            nav>div.links>* {
+                margin: 0.5rem 0;
+            }
+
+            .dropdown-content {
+                position: static;
+                display: none;
+                width: 100%;
+                box-shadow: none;
+                transform: none;
+                text-align: left;
+            }
+
+            nav>div.links>div.dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .navbar .search-box {
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .header-actions {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="navbar">
+                <div class="title">Desi</div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search products..." class="search-input">
+                    <span class="search-icon">&#128269;</span>
+                </div>
+            </div>
+
+            <div class="links">
+                <a href="{{ url_for('home') }}">Home</a>
+                <div class="dropdown">
+                    <a href="#">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('category_products', category_name='handicrafts') }}">Handicrafts</a>
+                        <a href="{{ url_for('category_products', category_name='textiles') }}">Textiles</a>
+                        <a href="{{ url_for('category_products', category_name='jewellery') }}">Jewellery</a>
+                        <a href="{{ url_for('category_products', category_name='pottery') }}">Pottery</a>
+                        <a href="{{ url_for('category_products', category_name='natural_oils') }}">Natural Oils</a>
+                        <a href="{{ url_for('category_products', category_name='herbal_soaps') }}">Herbal Soaps</a>
+                    </div>
+                </div>
+                <a href="{{ url_for('category_products', category_name='culture') }}">Culture &amp; Heritage</a>
+                <div class="dropdown">
+                    <a href="#">Beauty Blend</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('category_products', category_name='natural_oils') }}">Natural Oils</a>
+                        <a href="{{ url_for('category_products', category_name='herbal_soaps') }}">Herbal Soaps</a>
+                        <a href="{{ url_for('category_products', category_name='ayurvedic_products') }}">Ayurvedic
+                            Products</a>
+                    </div>
+                </div>
+                <a href="{{ url_for('category_products', category_name='dishes') }}">Regional Cuisine</a>
+            </div>
+
+            <div class="header-actions">
+                <div class="icon-button" style="position: relative;">
+                    &#128722;
+                    <span class="cart-badge"></span>
+                </div>
+                {% if username %}
+                <span>{{ username }}</span>
+                <a href="{{ url_for('upload_image') }}" style="text-decoration: none; color: inherit;">
+                    <div class="icon-button">&#128247;</div>
+                </a>
+                <a href="{{ url_for('logout') }}" style="text-decoration: none; color: inherit;">
+                    <div class="icon-button">&#128100;</div>
+                </a>
+                {% else %}
+                <a href="{{ url_for('nav') }}" style="text-decoration: none; color: inherit;">
+                    <div class="icon-button">&#128100;</div>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <section class="section">
+        <h2>{{ category_name|capitalize }}</h2>
+        <div class="grid">
+            {% if products %}
+            {% for product in products %}
+            <a href="{{ url_for('product_details', product_id=product.id) }}"
+                style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    <img src="{{ url_for('get_image', product_id=product.id) }}"
+                        alt="{{ product.product_image_name }}"
+                        style="width: 100%; height: 160px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                    <div class="card-content">
+                        <h3>{{ product.product_name }}</h3>
+                        <p>Price: ₹{{ product.product_price }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            {% else %}
+            <p>No products in the {{ category_name|capitalize }} category yet.</p>
+            {% endif %}
+        </div>
+    </section>
+</body>
+
+</html>

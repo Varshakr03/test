@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Recipe</title>
+    <link rel="stylesheet" href="path_to_your_styles.css"> <!-- Include your stylesheet link here -->
+    <style>
+        /* Example styles based on the previous form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .submit-btn, .cancel-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+
+        .cancel-btn:hover {
+            background-color: #e53935;
+        }
+
+        .upload-container {
+            margin-top: 10px;
+        }
+
+        .upload-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-container">
+        <div class="form-container">
+            <form action="{{ url_for('submit_recipe') }}" method="POST" enctype="multipart/form-data">
+                <h2>Submit Your Recipe</h2>
+                <p>Share your culinary creations with our community.</p>
+
+                <div class="form-group">
+                    <label class="form-label" for="recipe-title">Recipe Title</label>
+                    <input type="text" name="recipe-title" id="recipe-title" class="form-control" placeholder="Enter your recipe title" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea name="description" id="description" class="form-control" placeholder="Describe your recipe" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="ingredients">Ingredients</label>
+                    <input type="text" name="ingredient" class="form-control" placeholder="Add ingredient">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="instructions">Instructions</label>
+                    <textarea name="instruction" class="form-control" placeholder="Add instruction step" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="file-upload">Recipe Image</label>
+                    <div class="upload-container">
+                        <label for="file-upload" class="upload-btn">
+                            Upload a file
+                            <input type="file" name="file-upload" id="file-upload" class="file-input" required>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Submit Recipe</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

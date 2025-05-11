@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Login As</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .word {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* To remove default link underline */
+            color: white; /* To ensure text color is white */
+        }
+
+        .seller-btn {
+            background-color: #5cb85c;
+        }
+
+        .seller-btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .user-btn {
+            background-color: #007bff;
+        }
+
+        .user-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .bottom a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="word">Login As</h2>
+        {% if msg %}
+            <div class="error-message">{{ msg }}</div>
+        {% endif %}
+        <div class="button-container">
+            <a href="{{ url_for('sellerlog') }}" class="btn seller-btn">Seller</a>
+            <a href="{{ url_for('login') }}" class="btn user-btn">User</a>
+        </div>
+        <p class="bottom">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+        <p class="bottom">Are you a new seller? <a href="{{ url_for('sellerreg') }}">Register as Seller</a></p>
+    </div>
+
+</body>
+</html>

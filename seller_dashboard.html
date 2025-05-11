@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #007bff;
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            vertical-align: middle;
+            margin-right: 5px;
+            border-radius: 5px; /* Optional: for rounded corners */
+        }
+
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+            margin-top: 10px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        li {
+            margin-bottom: 5px;
+            color: #dc3545; /* Example color for out-of-stock */
+        }
+
+        p {
+            margin-top: 15px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ seller_username }}!</h1>
+
+    <h2>Your Uploaded Products:</h2>
+    {% if products %}
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                    {% if product.image_filename %}
+                        <img src="{{ url_for('static', filename='images/' + product.image_filename) }}" alt="{{ product.product_name }}" width="50" height="50">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.product_price }}</td>
+                <td>{{ product.product_quantity }}</td>
+                <td>{{ product.category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You haven't uploaded any products yet.</p>
+    {% endif %}
+
+    <h2>Out of Stock Notifications:</h2>
+    {% if out_of_stock_notifications %}
+    <ul>
+        {% for item in out_of_stock_notifications %}
+        <li>{{ item }} is out of stock!</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No products are currently out of stock.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('sellerhome') }}">Back to Seller Home</a></p>
+</body>
+</html>
