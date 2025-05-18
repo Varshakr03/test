@@ -23,7 +23,7 @@ mysql = MySQL(app)
 
 # Navigation or landing page
 @app.route('/')
-def nav():
+def navigatereg():
     return render_template('navigatereg.html')
 
 @app.route('/sellerreg', methods=['GET', 'POST'])
