@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Edit Tracking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Basic styling - you can expand on this */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #343a40;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .sidebar-header {
+            padding: 0 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #4b545c;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #c2c7d0;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #2c3136;
+            color: white;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            margin-left: 240px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .content-header h1 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #343a40;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="display: flex; width: 100%;">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+                <p>Welcome, {{ session['admin_username'] }}</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+                <li><a href="{{ url_for('admin_sellers') }}">Sellers</a></li>
+                <li><a href="{{ url_for('admin_products') }}">Products</a></li>
+                <li><a href="{{ url_for('admin_orders') }}" class="active">Orders</a></li>
+                <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="content-header">
+                <h1>Edit Order Tracking</h1>
+                <a href="{{ url_for('admin_logout') }}" class="logout-btn">Logout</a>
+            </div>
+
+            <div class="form-container">
+                <h2>Edit Tracking for Order #{{ order.id }}</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="tracking_number">Tracking Number:</label>
+                        <input type="text" id="tracking_number" name="tracking_number" value="{{ order.tracking_number }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="order_status">Order Status:</label>
+                        <select id="order_status" name="order_status">
+                            <option value="Pending" {% if order.order_status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Processing" {% if order.order_status == 'Processing' %}selected{% endif %}>Processing</option>
+                            <option value="Shipped" {% if order.order_status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                            <option value="Delivered" {% if order.order_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                            <option value="Cancelled" {% if order.order_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Update Tracking</button>
+                    </div>
+                </form>
+                <a href="{{ url_for('admin_orders') }}" class="back-link">Back to Orders</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
